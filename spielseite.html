@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Papas Geburtstag - Rätsel</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Papas Geburtstag 2026</h1>
+    </header>
+
+    <main>
+
+        <section>
+
+            <h2 class="titel">Ein Rätsel für Papa</h2>
+
+            <p>Löse das Zelträtsel!</p>
+            <p>Wenn alle 59 Zelte richtig stehen, verraten sie dir was wir gemeinsam mit dir vorhaben.</p>
+
+        </section>
+
+        <details class="regeln">
+            <summary>So wird gespielt</summary>
+            <ul>
+                <li><b>Jeder Baum bekommt genau ein Zelt</b>, direkt daneben: oben, unten, links oder rechts.</li>
+                <li><b>Zelte berühren sich nie</b>, auch nicht schräg.</li>
+                <li><b>Die Zahlen am Rand</b> sagen, wie viele Zelte in der Zeile oder Spalte stehen.</li>
+                <li>Antippen: einmal Zelt, zweimal Wiese (Punkt als Merkhilfe), dreimal wieder leer.</li>
+                <li>Dein Fortschritt bleibt auf diesem Gerät gespeichert. Du kannst jederzeit aufhören und später
+                    weitermachen.</li>
+
+            </ul>
+        </details>
+
+        <section>
+
+            <div class="spielfeld" id="spielfeld"></div>
+
+            <div class="leiste">
+                <span class="status" id="status"></span>
+                <button class="knopf-rand" id="neustart" type="button">Neu anfangen</button>
+            </div>
+
+        </section>
+
+        <section class="aufloesung" id="aufloesung" hidden>
+            <h2>Trag den Satz ein</h2>
+            <p>Lies die Buchstaben auf den Zelten Zeile für Zeile und tippe sie hier ein. Jedes richtige Wort wird grün.
+            </p>
+            <div class="woerter" id="woerter"></div>
+        </section>
+
+    </main>
+
+    <div class="popup hidden" id="popup">
+        <div class="popup-box">
+            <h2>Alle Zelte stehen!</h2>
+            <p>Lies die Buchstaben auf den Zelten Zeile für Zeile und trage die Buchstaben unten ein.</p>
+            <button type="button" id="popupZu">Los geht's</button>
+        </div>
+    </div>
+
+    <div class="popup hidden" id="popupGeschenk">
+        <div class="popup-box">
+            <h2>Geschafft!</h2>
+            <p>Dein Geschenk:</p>
+            <p class="geschenk">Wandern durch den Harz mit Übernachtung im Schlosshotel Ballenstedt</p>
+            <p>Pack die Wanderschuhe ein, wir fahren zusammen weg!</p>
+            <button type="button" id="geschenkZu">Schließen</button>
+        </div>
+    </div>
+
+    <script src="spiel.js"></script>
+
+</body>
+
+</html>

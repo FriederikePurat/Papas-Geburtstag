@@ -1,0 +1,584 @@
+@import url("https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;600;700&display=swap");
+
+/* ========== FARBEN & SCHRIFTEN: Harzer Fichtenwald bei Nacht ========== */
+:root {
+    --nacht: #14231d;
+    --moos: #1f352c;
+    --moos-hell: #2a4639;
+    --baumfeld: #1a2e25;
+    --linie: #2f4b3f;
+    --tanne: #5fae74;
+    --stamm: #7a5a3c;
+    --zelt: #f2a541;
+    --zelt-hell: #f6bb66;
+    --nebel: #e7efe9;
+    --blass: #9bb3a6;
+    --fehler: #e5675b;
+    --richtig: #8fd6a0;
+    --schrift-titel: "Young Serif", Georgia, serif;
+    --schrift-text: "Figtree", Arial, sans-serif;
+}
+
+/* ========== GRUNDGERÜST (Startseite + Spielseite) ========== */
+[hidden] {
+    display: none !important;
+}
+
+body {
+    margin: 0;
+    font-family: var(--schrift-text);
+    line-height: 1.5;
+    background: var(--nacht);
+    color: var(--nebel);
+}
+
+p {
+    margin: 0 0 10px;
+}
+
+h2 {
+    margin: 0 0 22px;
+    font: 400 26px var(--schrift-titel);
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 12px 20px;
+    background: var(--moos-hell);
+    border-bottom: 1px solid var(--linie);
+}
+
+header h1 {
+    margin: 0;
+    font: 400 30px var(--schrift-titel);
+}
+
+main {
+    max-width: 760px;
+    margin: 95px auto 40px;
+    padding: 10px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+section {
+    padding: 22px;
+    text-align: center;
+    background: var(--moos);
+    border: 1px solid var(--linie);
+    border-radius: 10px;
+}
+
+.form-mitte {
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.form-mitte p {
+    font-size: 17px;
+}
+
+.titel {
+    color: var(--zelt);
+}
+
+/* Buttons */
+button {
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+button:focus-visible {
+    outline: 2px solid var(--nebel);
+    outline-offset: 2px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 18px;
+}
+
+.buttons button,
+.popup-box button {
+    padding: 12px 26px;
+    border-radius: 8px;
+    font-size: 17px;
+    font-weight: bold;
+    background: var(--zelt);
+    color: var(--nacht);
+}
+
+.buttons button:hover,
+.popup-box button:hover {
+    background: var(--zelt-hell);
+}
+
+.knopf-rand {
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-weight: 600;
+    background: transparent;
+    color: var(--nebel);
+    border: 1px solid var(--linie);
+}
+
+/* ========== RÄTSELTEXT MIT DEN KLEINEN ZAHLEN ========== */
+.raetsel-text .eyebrow {
+    margin: 0;
+    font-size: clamp(16px, 3.6vw, 20px);
+    font-weight: 700;
+    line-height: 2.2;
+    letter-spacing: .14em;
+    word-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--zelt);
+}
+
+.raetsel-text .titel {
+    margin: 0 0 6px;
+    font-size: clamp(30px, 7vw, 48px);
+    line-height: 1.4;
+    word-spacing: .3em;
+}
+
+.raetsel-text .lead {
+    margin: 0;
+    font-size: clamp(20px, 4.6vw, 27px);
+    line-height: 1.65;
+    word-spacing: .25em;
+    transition: line-height 1s ease;
+}
+
+ruby {
+    ruby-position: under;
+    -webkit-ruby-position: after;
+    padding: 0 .02em;
+}
+
+rt {
+    padding: 0 .06em;
+    font: 600 .4em/1.1 var(--schrift-text);
+    letter-spacing: -.02em;
+    text-transform: none;
+    color: var(--blass);
+    transition: font-size 1.2s ease, opacity .8s ease, padding 1.2s ease;
+}
+
+.raetsel-text .titel rt {
+    font-size: .27em;
+}
+
+.mk {
+    position: relative;
+}
+
+/* Zahlen verschwinden in den Buchstaben */
+.zahlen-weg rt {
+    font-size: 0 !important;
+    opacity: 0;
+    padding: 0;
+}
+
+.zahlen-weg .lead {
+    line-height: 1.5;
+}
+
+.zahlen-weg .mk {
+    cursor: pointer;
+    text-decoration: underline dotted var(--zelt) 2px;
+    text-underline-offset: 5px;
+}
+
+/* Zahl beim Antippen kurz zeigen */
+.zahlen-weg .mk.zeigen::after {
+    content: attr(data-n);
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    z-index: 5;
+    transform: translateX(-50%);
+    margin-top: 4px;
+    padding: 2px 7px;
+    border-radius: 6px;
+    background: var(--zelt);
+    color: var(--nacht);
+    font: 700 14px/1.4 var(--schrift-text);
+    letter-spacing: 0;
+    text-transform: none;
+    white-space: nowrap;
+}
+
+/* Regeln */
+.regeln {
+    padding: 14px 18px;
+    background: var(--moos);
+    border: 1px solid var(--linie);
+    border-radius: 10px;
+}
+
+.regeln summary {
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.regeln ul {
+    margin: 10px 0 0;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    color: var(--blass);
+}
+
+.regeln b {
+    color: var(--nebel);
+}
+
+/* ========== SPIELFELD ========== */
+.spielfeld {
+    display: grid;
+    grid-template-columns: repeat(18, minmax(0, 1fr));
+    gap: 2px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.zahl {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: clamp(10px, 2.4vw, 16px);
+    font-variant-numeric: tabular-nums;
+    color: var(--blass);
+}
+
+.zahl.passt {
+    color: var(--richtig);
+}
+
+.zahl.zuviel {
+    color: var(--fehler);
+}
+
+.feld {
+    position: relative;
+    aspect-ratio: 1;
+    min-width: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    background: var(--moos-hell);
+    color: inherit;
+}
+
+.feld.baum {
+    background: var(--baumfeld);
+    cursor: default;
+}
+
+.feld svg {
+    width: 80%;
+    height: 80%;
+}
+
+.feld.wiese::after {
+    content: "";
+    width: 22%;
+    height: 22%;
+    border-radius: 50%;
+    background: var(--tanne);
+}
+
+.feld.konflikt {
+    box-shadow: inset 0 0 0 2px var(--fehler);
+}
+
+.zeltbuchstabe {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--schrift-titel);
+    font-size: clamp(11px, 2.8vw, 20px);
+    color: var(--nacht);
+    opacity: 0;
+    transform: scale(.4);
+    transition: opacity .4s, transform .4s;
+}
+
+.geloest .feld.zelt {
+    background: var(--zelt);
+}
+
+.geloest .feld.zelt svg {
+    opacity: 0;
+}
+
+.geloest .zeltbuchstabe {
+    opacity: 1;
+    transform: none;
+}
+
+.leiste {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.status {
+    flex: 1;
+    min-width: 0;
+    text-align: left;
+    font-size: 14px;
+    color: var(--blass);
+}
+
+/* ========== AUFLÖSUNG / WORTRÄTSEL ========== */
+.aufloesung {
+    scroll-margin-top: 90px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.aufloesung h2,
+.aufloesung p {
+    margin: 0;
+}
+
+.aufloesung p {
+    color: var(--blass);
+}
+
+.streifen,
+.vorrat {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+.streifen {
+    gap: 3px;
+}
+
+.vorrat {
+    gap: 6px;
+}
+
+.streifen span {
+    width: clamp(18px, 4.6vw, 26px);
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    background: var(--zelt);
+    color: var(--nacht);
+    font-family: var(--schrift-titel);
+    font-size: clamp(12px, 3.4vw, 17px);
+}
+
+.woerter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px 22px;
+}
+
+.wort {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
+}
+
+.kaestchen {
+    width: clamp(24px, 6.4vw, 36px);
+    aspect-ratio: 1;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    border: 2px dashed var(--linie);
+    background: transparent;
+    color: var(--nacht);
+    font-family: var(--schrift-titel);
+    font-size: clamp(14px, 4vw, 22px);
+}
+
+.kaestchen.voll {
+    background: var(--zelt);
+    border: 2px solid var(--zelt);
+}
+
+.kaestchen.ausgewaehlt {
+    border: 2px solid var(--zelt);
+    box-shadow: 0 0 0 2px var(--zelt);
+}
+
+.wort.richtig .kaestchen {
+    background: var(--richtig);
+    border-color: var(--richtig);
+    cursor: default;
+}
+
+input.kaestchen {
+    text-align: center;
+    text-transform: uppercase;
+    color: var(--nebel);
+    caret-color: var(--zelt);
+}
+
+input.kaestchen:focus {
+    outline: none;
+    border: 2px solid var(--zelt);
+}
+
+input.kaestchen.voll {
+    color: var(--nacht);
+}
+
+.woerter.falsch {
+    animation: wackeln .4s;
+}
+
+@keyframes wackeln {
+    25% {
+        transform: translateX(-6px);
+    }
+
+    75% {
+        transform: translateX(6px);
+    }
+}
+
+.buchstabe {
+    width: clamp(30px, 8vw, 40px);
+    aspect-ratio: 1;
+    padding: 0;
+    border-radius: 50%;
+    border: 1px solid var(--zelt);
+    background: transparent;
+    color: var(--zelt);
+    font-family: var(--schrift-titel);
+    font-size: clamp(15px, 4.4vw, 21px);
+}
+
+.buchstabe:disabled {
+    opacity: .18;
+    cursor: default;
+}
+
+/* ========== POPUP & KONFETTI ========== */
+.popup {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(10, 18, 14, .75);
+}
+
+.popup.hidden {
+    display: none;
+}
+
+.popup-box {
+    width: 90%;
+    max-width: 480px;
+    padding: 35px 28px;
+    text-align: center;
+    background: var(--moos);
+    border: 2px solid var(--linie);
+    border-radius: 18px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, .4);
+}
+
+.popup-box h2 {
+    margin-bottom: 10px;
+    color: var(--zelt);
+}
+
+.popup-box p {
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.popup-box .geschenk {
+    margin: 15px 0;
+    font-family: var(--schrift-titel);
+    font-size: clamp(22px, 5vw, 30px);
+    line-height: 1.3;
+}
+
+.popup-box button {
+    margin-top: 20px;
+}
+
+.confetti {
+    position: fixed;
+    top: -20px;
+    z-index: 4000;
+    pointer-events: none;
+    animation-name: fall;
+    animation-timing-function: linear;
+}
+
+@keyframes fall {
+    from {
+        transform: translateY(0) rotate(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* ========== WENIGER BEWEGUNG & HANDY ========== */
+@media (prefers-reduced-motion: reduce) {
+
+    rt,
+    .raetsel-text .lead,
+    .zeltbuchstabe {
+        transition: none;
+    }
+
+    .woerter.falsch {
+        animation: none;
+    }
+}
+
+@media (max-width: 700px) {
+    main {
+        margin-top: 85px;
+    }
+
+    header h1 {
+        font-size: 24px;
+    }
+
+    section {
+        padding: 16px 12px;
+    }
+}
